@@ -15,7 +15,7 @@ approach 😄
 
 ## Installation
 
-To run the script, you first need to install a few dependencies: `pip install requirements.txt`
+To run the script, you first need to install a few dependencies: `pip install -r requirements.txt`
 
 ## Usage
 
