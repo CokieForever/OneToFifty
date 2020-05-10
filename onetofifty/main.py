@@ -192,5 +192,9 @@ def sortRects(lRects):
         lOrigin = oRect.lCenter
 
 
+def test():
+    pyautogui.press("down")
+
+
 if __name__ == "__main__":
     main()

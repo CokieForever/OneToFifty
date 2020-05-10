@@ -27,10 +27,11 @@ __author__ = "Quoc-Nam Dessoulles"
 __email__ = "cokie.forever@gmail.com"
 __license__ = "MIT"
 
-from unittest.mock import patch, call
+from unittest.mock import patch, call, MagicMock
 
 import pytest
 
+from onetofifty.tests.pyautogui_mock import pyautogui   # Must come first
 from onetofifty import main
 from onetofifty.tests.test_util import openResImage
 from onetofifty.util.util import Rect
@@ -64,14 +65,14 @@ def test_getInputImg(oScreenShotMock):
     assert aImg.shape == aTemplateImg.shape
 
 
-@patch("pyautogui.press")
 @patch("onetofifty.main.screenShot")
-def test_getInputImg_whenScrolled(oScreenShotMock, oPressMock):
+def test_getInputImg_whenScrolled(oScreenShotMock):
     oScreenShotMock.return_value = openResImage("scene_cropped.png")
+    pyautogui.press = MagicMock()
     aTemplateImg = openResImage("input.png")
     with pytest.raises(SystemExit) as oExc:
         main.getInputImgFromScreen(aTemplateImg)
-    oPressMock.assert_has_calls([call("down", presses=3, interval=0.2)]*5)
+    pyautogui.press.assert_has_calls([call("down", presses=3, interval=0.2)] * 5)
     assert oExc.value.code == 1
 
 
